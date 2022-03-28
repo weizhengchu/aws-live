@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Personal Account</title>
+<meta name ="viewport" content="width=device-width, intial-scale=1.0">
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart1);
+
+// Draw the chart and set the chart values
+function drawChart1() {
+  var data = google.visualization.arrayToDataTable([
+  ['Status', 'Frequency'],
+  ['Absent', 6],
+  ['Late', 1],
+  ['Present', 1],
+
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Attendance Performance', 'width':650, 'height':350};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+         ['Element', 'Density', { role: 'style' } ],
+         ['Absent', 6, 'red' ],
+         ['Late', 1, 'yellow' ],
+         ['Present', 1, 'Green' ]
+      ]);
+
+      var options = {
+        title: "Attedance Freqency",
+        width: 650,
+        height: 350,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(data, options);
+    }
+  </script>
+
+</head>
+<body>
+
+    <div class="profile" action="/fetchdata" autocomplete="on" method="POST">
+       <img src="boji.jpg" alt="Profile Image" class="Prof_image">
+
+       
+        <div class="prof_name">Boji Sama</div>
+        <div class="prof_title">Ousama King</div>
+        <div class="detail">
+             <div class="prof_id">Employee ID  :{{employee[0]}}</div>
+            <div class="prof_phone">Phone Number : 111-1111111</div>
+            <div class="prof_email">Email Address : xxx@gmail.com</div>
+            <div class="prof_address">Home Address : Isekai </div>
+        </div>
+       
+    </div>
+
+    <div class="profile_detail">
+        <h1 class="Achievement">Achievement</h1>
+        <ul class="award">
+            <li><h4>Employee of the Year ( 2020 )</h4></li>
+            <li><h4>Perfect Attendance Award</h4></li>
+            <li><h4>Most Favourable Employee </h4></li>
+
+        </ul>
+    </div>
+
+    <div class="attendance">
+        <h1 style="color:white; font-weight: bold; text-decoration: underline;"> Attendance Table</h1>
+        <div class="table_container">
+        <table>
+           <tr>
+               <th>Date</th>
+               <th>Time</th>
+               <th>Status</th>
+           </tr>
+           <tr>
+               <td>19/01/2022</td>
+               <td>8:00</td>
+               <td>Present</td>
+           </tr>
+           <tr>
+            <td>20/01/2022</td>
+            <td>9:00</td>
+            <td>Late</td>
+        </tr>
+        <tr>
+            <td>21/01/2022</td>
+            <td>none</td>
+            <td>Absent</td>
+        </tr>
+        <tr>
+            <td>21/01/2022</td>
+            <td>none</td>
+            <td>Absent</td>
+        </tr>
+        <tr>
+            <td>21/01/2022</td>
+            <td>none</td>
+            <td>Absent</td>
+        </tr>
+        <tr>
+            <td>21/01/2022</td>
+            <td>none</td>
+            <td>Absent</td>
+        </tr>
+   
+
+
+        </table>
+    </div>
+    </div>
+
+
+    <div class="visualization">
+        <div id="piechart" style="float:left;cursor:pointer;"></div>
+        <div id="barchart_values" style="left:60%;position:absolute;cursor:pointer;"></div>
+   
+
+
+        
+    </div>
+
+
+</body>
+
+</html>
