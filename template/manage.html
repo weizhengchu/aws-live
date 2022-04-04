@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Manage Employee</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <link rel="stylesheet" href="../static/manage.css">
+
+    <nav class="side_nav">
+        <div class="company">
+            <i class='bx bx-menu' id="menu_btn"></i>
+        </div>
+        <div class="profile">
+        </div>
+
+        <ul class="nav_list">
+
+            <li>      
+                <a href="/addEmp">
+                    <i class='bx bx-user-plus' ></i>
+                    <span class="linkName">Add Employee</span>
+                </a>
+            </li>
+
+            <li>      
+                <a href="/manage">
+                    <i class='bx bx-male-female' ></i>
+                    <span class="linkName">Manage</span>
+                </a>
+            </li>
+
+            <li>      
+                <a href="/">
+                    <i class='bx bx-log-out' ></i>
+                    <span class="linkName">Logout</span>
+                </a>
+            </li>
+
+            
+        </ul>
+    </nav>
+
+    <main class="mainContent">
+     
+        <div class ="box1">
+            <img src="../static/Cat.jpg" alt="" id="myImage">
+            <div class="profile">
+                <h2>Desmond Meow</h2>
+                <p>Human Resource Manager | Always Sleep | 薪水小偷</p>
+                <p>Contact number: 011-11227126</p>
+                <p>ID: 20WMR00333</p>
+                <p>Email: desmondcsc-wm20@student.tarc.edu.my</p>
+                
+            </div>
+        </div>
+        <div class="box2" style="overflow: auto;">
+            <div class="manageHeader">
+                <h1>Manage Employees</h1>
+                <div class="manageBtn">
+                    <button id="delete">
+                        Delete
+                    </button>
+                    <a id="addBtn" href="/addEmp">Add New Employee</a>
+                </div>
+            </div>
+            <div class="table">
+                <table id="viewemp">
+                        <tr id="cname">
+                            <td style="width:4%"></td>
+                            <td style="width:8%">ID</td><td style="width:38%">Name</td>
+                            <td style="width:38%">Email</td><td style="width:12%">Action</td>
+                        </tr>
+
+                        {% for emp in myData %}
+                        
+                        <tr id="rowData">
+                            <td id="rowCheckBox">
+                                <input type="checkbox" value="{{emp[0]}}" name="myCheckBox" class="mycheckbox">
+                            </td>
+                            <td id="employeeID">
+                                <form action="fetchdata" method="post">
+                                    <input type="submit" id="idButton" name="empButton" value="{{emp[0]}}">
+                                </form>
+                            </td>
+                                
+                            <td>
+                                {{emp[1]}}
+                            </td>
+                                
+                            <td>
+                                {{emp[2]}}
+                            </td>
+
+                            <td id="action">
+                                <form action="editEmp" method="post">
+                                    <input type="hidden" name="empID2" value="{{emp[0]}}">
+                                    <button type="submit" name="editBtn" id="editBtn" class="bx bx-edit-alt"></button>
+                                </form>
+
+                                <a href="/delete/{{emp[0]}}"><button id="dltBtn" name="dltBtn" class="bx bxs-user-x"></button></a>
+
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                </table>
+            </div>
+            <div id="empData">
+            
+            </div>
+        </div>
+        <div class="box3">
+
+            <h2>
+                MyNote
+            </h2>
+            <p>
+                9am - Meeting
+            </p>
+            <p>12pm - Lunch</p> <p>2pm - Sleep</p>
+
+            <i class='bx bx-edit-alt' ></i>
+
+        </div>
+        <div class="box4">
+            <h2>
+                MyNote
+            </h2>
+
+            <p>DWT Assignment</p>
+            <p>FYP</p>
+            <p>DE assignment</p>
+            <i class='bx bx-edit-alt' ></i>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+
+        var btn = document.getElementById("delete");
+
+        btn.onclick=function(){
+            var chk = document.querySelectorAll(".mycheckbox")
+            chkLength = chk.length
+            var arr = []
+
+            for(i=0;i<chkLength;i++){
+                if (chk[i].checked == true){
+                    arr.push(chk[i].value);
+                }
+            }
+            
+            console.log(arr);
+
+            const formData = new FormData();
+            formData.append("listID",JSON.stringify(arr));
+            console.log(formData);
+            var request = new XMLHttpRequest();
+            request.open("POST","/delete");
+            request.send(formData);
+
+            request.onreadystatechange = function() {
+                
+                if (request.readyState==4 && request.status==200){
+                    location.reload();
+                }
+            }
+        }
+
+        let menu = document.querySelector("#menu_btn");
+        let sidebar = document.querySelector(".side_nav");
+        let mainContent = document.querySelector("main");
+
+        menu.onclick = function(){
+            sidebar.classList.toggle("active");
+            mainContent.classList.toggle("passive");
+        }
+
+    </script>
+
+</body>
+</html>

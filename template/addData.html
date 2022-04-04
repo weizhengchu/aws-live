@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styleAddEdit.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleAddEdit.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <title>Add Employee</title>
+</head>
+<body>
+  <nav class="side_nav">
+    <div class="company">
+        <i class='bx bx-menu' id="menu_btn"></i>
+    </div>
+    <div class="profile">
+    </div>
+
+    <ul class="nav_list">
+
+        <li>      
+            <a href="/addEmp">
+                <i class='bx bx-user-plus' ></i>
+                <span class="linkName">Add Employee</span>
+            </a>
+        </li>
+
+        <li>      
+            <a href="/manage">
+                <i class='bx bx-male-female' ></i>
+                <span class="linkName">Manage</span>
+            </a>
+        </li>
+
+        <li>      
+            <a href="/login">
+                <i class='bx bx-log-out' ></i>
+                <span class="linkName">Logout</span>
+            </a>
+        </li>
+
+        
+    </ul>
+</nav>
+
+  <main class="mainContent">
+
+    <h1>Employee Registration</h1>
+    <h2 class="ei">Employee Info :</h2>
+
+    <form class="two" action="/addemp" method="POST" enctype="multipart/form-data">
+
+        <div class="row">
+          <label>
+            Employee ID
+            <input name="emp_id" placeholder="e.g. XXX123" tabindex="2" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Employee Name
+            <input name="emp_name" placeholder="e.g. John Doe" tabindex="1" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Email
+            <input name="email" placeholder="e.g. xxxxx@mail.com" tabindex="1" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Identification Card No.
+            <input name="emp_ic" maxlength="12" placeholder="Enter IC without dashes (-)" tabindex="3" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Date of Birth
+            <input name="emp_dob" type='date' tabindex="4" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Gender
+            <select name="gender" tabindex="5" >
+              <option value="" disabled selected > e.g. F / M</option>
+              <option>Female</option>
+              <option>Male</option>
+            </select>
+          </label>
+        </div>
+      
+      <h2 class="ai">Additional Info :</h2>
+
+      <div class="row">
+        <label style="border-top: 2px solid #e4e4e4;">
+          Benefits
+          <select name="benefits" tabindex="5" >
+            <option value="" disabled selected > Choose a benefit tier</option>
+            <option>Tier 1</option>
+            <option>Tier 2</option>
+            <option>Tier 3</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Payroll
+          <input name="payroll" placeholder="Enter employee's salary" tabindex="4" />
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Hired Date
+          <input name="hireddate" type='date' tabindex="4" />
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Leaving Date
+          <input name="leavingdate" type='date' tabindex="4" />
+        </label>
+      </div>
+
+      <div class="row">
+        <label>
+          Employee Photo
+          <input name="emp_photo" type=file tabindex="4" />
+        </label>
+      </div>
+
+     <div class="boxSubmit">
+        <button type="submit">Add Employee +</button>
+      </div>
+
+      </form>
+    </main>
+
+      <script type="text/javascript">
+
+          let menu = document.querySelector("#menu_btn");
+          let sidebar = document.querySelector(".side_nav");
+          let mainContent = document.querySelector("main");
+
+          menu.onclick = function(){
+            sidebar.classList.toggle("active");
+            mainContent.classList.toggle("passive");
+          }
+      </script>
+
+ 
+</body>
+</html>

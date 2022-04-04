@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Personal Account</title>
+<meta name ="viewport" content="width=device-width, intial-scale=1.0">
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart1);
+
+// Draw the chart and set the chart values
+function drawChart1() {
+  var absent =0;
+  var present =0;
+  var late =0;
+  var data2 = '{{datedetail|tojson}}';
+  datedetail=JSON.parse(data2);
+  for(var i=0;i <datedetail.length ;i++){
+        if(datedetail[i][2]=="Absent") {
+            absent= absent + 1;
+            
+        }
+        else if (datedetail[i][2]=="Late"){
+           late= late + 1;
+       }
+       else if (datedetail[i][2]=="Present"){
+            present= present + 1;
+        }
+      }
+      
+  console.log(absent);
+  var data = google.visualization.arrayToDataTable([
+  ['Status', 'Frequency'],
+  ['Absent', absent],
+  ['Late', late],
+  ['Present', present],
+
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Attendance Performance', 'width':650, 'height':350};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var absent =0;
+  var present =0;
+  var late =0;
+  var data2 = '{{datedetail|tojson}}';
+  datedetail=JSON.parse(data2);
+  for(var i=0;i <datedetail.length ;i++){
+        if(datedetail[i][2]=="Absent") {
+            absent= absent + 1;
+            
+        }
+        else if (datedetail[i][2]=="Late"){
+           late= late + 1;
+       }
+       else if (datedetail[i][2]=="Present"){
+            present= present + 1;
+        }
+      }
+      
+  console.log(absent);
+
+        
+      var data = google.visualization.arrayToDataTable([
+         ['Element', 'Density', { role: 'style' } ],
+         ['Absent', absent, 'red' ],
+         ['Late', late, 'yellow' ],
+         ['Present', present, 'Green' ]
+      ]);
+
+      var options = {
+        title: "Attedance Freqency",
+        width: 650,
+        height: 350,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(data, options);
+    }
+  </script>
+
+</head>
+<body>
+
+    <nav class="side_nav">
+        <div class="company">
+            <i class='bx bx-menu' id="menu_btn"></i>
+        </div>
+    
+        <ul class="nav_list">
+    
+            <li>      
+                <a href="/addEmp">
+                    <i class='bx bx-user-plus' ></i>
+                    <span class="linkName">Add Employee</span>
+                </a>
+            </li>
+    
+            <li>      
+                <a href="/manage">
+                    <i class='bx bx-male-female' ></i>
+                    <span class="linkName">Manage</span>
+                </a>
+            </li>
+    
+            <li>      
+                <a href="/login">
+                    <i class='bx bx-log-out' ></i>
+                    <span class="linkName">Logout</span>
+                </a>
+            </li>
+    
+            
+        </ul>
+    </nav>
+    <main class="mainContent">
+    <div class="profile" action="http://192.168.100.6:80/" autocomplete="on" method = "GET"  >
+       <img id="images" src="{{ url_for('static', filename='image/'+detail[10]) }}" class="Prof_image">
+         
+       
+        <div class="prof_name">{{detail[1]}}</div>
+        <div class="prof_id">ID : {{detail[0]}}</div>
+        <div class="detail">
+            <br>
+            <div class="prof_email">Employee Email : {{detail[2]}}</div>
+            <div class="prof_ic">Employee IC : {{detail[3]}}</div>
+            <div class="prof_dob">DOB : {{detail[4]}}</div>
+            <div class="prof_gender">Gender : {{detail[5]}} </div>
+            <div class="prof_benefit">benefit : {{detail[6]}} </div>
+            <div class="prof_payroll">payroll : {{detail[7]}} </div>
+            <div class="prof_hireddate">Hired Date : {{detail[8]}} </div>
+            <div class="prof_leavingdate">Leaving Date : {{detail[9]}} </div>
+            <br>
+            <br>
+        </div>
+     
+    </div>
+
+ 
+
+    <div class="attendance" style="overflow: auto;">
+        <h1 style="color:white; font-weight: bold; text-decoration: underline;"> Attendance Table</h1>
+        <div class="table_container">
+        <table>
+           <tr>
+               <th>Date</th>
+               <th>Time</th>
+               <th>Status</th>
+           </tr>
+           {% for data in datedetail %}
+           <tr>
+               <td>{{data[0]}}</td>
+               <td>{{data[1]}}</td>
+               <td>{{data[2]}}</td>
+           </tr>
+           {% endfor %}
+
+        </table>
+    </div>
+    </div>
+
+
+    <div class="visualization">
+        <div id="piechart" style="float:left;cursor:pointer;"></div>
+        <div id="barchart_values" style="left:60%;position:absolute;cursor:pointer;"></div>
+        
+    </div>
+
+    </main>
+
+    <script type="text/javascript">
+    
+        let menu = document.querySelector("#menu_btn");
+        let sidebar = document.querySelector(".side_nav");
+        let mainContent = document.querySelector("main");
+    
+        menu.onclick = function(){
+            sidebar.classList.toggle("active");
+            mainContent.classList.toggle("passive");
+        }
+    
+    
+    </script> 
+
+
+</body>
+
+</html>
