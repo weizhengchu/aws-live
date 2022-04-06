@@ -143,7 +143,7 @@ def fectdata():
     cursor2 = db_conn.cursor()
     cursor1.execute("SELECT * FROM employee")
     employee = cursor1.fetchall()
-    sqls = "SELECT * FROM Attendence where emp_id = {s}".format(s=emp_id)
+    sqls = "SELECT * FROM Attendance where emp_id = {s}".format(s=emp_id)
     cursor2.execute(sqls)
     datedetail= cursor2.fetchall()
     datedetail=list(map(list,datedetail))
